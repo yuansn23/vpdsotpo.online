@@ -1,1 +1,685 @@
-1
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <script>
+!function(f,b,e,v,n,t,s) {
+    if(f.fbq) return;
+    n=f.fbq=function(){
+        n.callMethod ? n.callMethod.apply(n,arguments) : n.queue.push(arguments)
+    };
+    if(!f._fbq) f._fbq=n;
+    n.push=n;
+    n.loaded=!0;
+    n.version='2.0';
+    n.queue=[];
+
+    t=b.createElement(e);
+    t.async=!0;
+    t.src=v;
+    s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)
+}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+
+// 提取 URL 中的 fbid 参数
+function getQueryParam(param) {
+    var urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+
+var fbid = getQueryParam('fbid');
+if (fbid) {
+    fbq('init', fbid);
+    fbq('track', 'PageView');
+}
+</script>
+ 
+
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>StockInsight Pro - Expert Stock Analysis Community</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            background-color: #121f35;
+            color: #fff;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #1b263b 0%, #273c5a 100%);
+        }
+        
+        .gold-text {
+            color: #F2C925;
+        }
+        
+        .gold-gradient {
+            background: linear-gradient(90deg, #F2C925 0%, #E6B91E 100%);
+        }
+        
+        .blue-gradient {
+            background: linear-gradient(90deg, #1E3A8A 0%, #3B82F6 100%);
+        }
+        
+        .action-button {
+            background: linear-gradient(90deg, #F2C925 0%, #E6B91E 100%);
+            color: #0d1b2a;
+            font-weight: 700;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(242, 201, 37, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .action-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(242, 201, 37, 0.3);
+        }
+        
+        .action-button::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: all 0.5s ease;
+        }
+        
+        .action-button:hover::after {
+            left: 100%;
+        }
+        
+        .secondary-button {
+            background: linear-gradient(90deg, #3B82F6 0%, #1E3A8A 100%);
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .secondary-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(59, 130, 246, 0.3);
+        }
+        
+        .secondary-button::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: all 0.5s ease;
+        }
+        
+        .secondary-button:hover::after {
+            left: 100%;
+        }
+        
+        .feature-card {
+            background: linear-gradient(135deg, #273c5a 0%, #1b263b 100%);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            border-left: 3px solid #F2C925;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .testimonial-card {
+            background: linear-gradient(135deg, #273c5a 0%, #1b263b 100%);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            border-left: 3px solid #3B82F6;
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .stock-card {
+            background: linear-gradient(135deg, #273c5a 0%, #1b263b 100%);
+            border-radius: 10px;
+            padding: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        
+        .stock-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+            border-color: rgba(242, 201, 37, 0.5);
+        }
+        
+        .stock-up {
+            color: #10B981;
+        }
+        
+        .stock-down {
+            color: #EF4444;
+        }
+        
+        .fixed-notification {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #F2C925 0%, #E6B91E 100%);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #0d1b2a;
+            font-weight: bold;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(242, 201, 37, 0.5);
+            z-index: 1000;
+            animation: pulse 2s infinite;
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #EF4444;
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(242, 201, 37, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(242, 201, 37, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(242, 201, 37, 0);
+            }
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            animation: fadeIn 0.3s;
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #273c5a 0%, #1b263b 100%);
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #3B82F6;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 4px 25px rgba(59, 130, 246, 0.3);
+            animation: slideIn 0.4s;
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: #F2C925;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        @keyframes fadeIn {
+            from {opacity: 0}
+            to {opacity: 1}
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .star-rating {
+            color: #F2C925;
+        }
+        
+        .wavy-bg {
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+        }
+
+        .wavy-bg svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 69px;
+        }
+
+        .wavy-bg .shape-fill {
+            fill: #121f35;
+        }
+        
+        .dotted-bg {
+            background-image: radial-gradient(#3B82F6 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px; 
+        }
+        
+        .highlight-text {
+            background: linear-gradient(120deg, rgba(242, 201, 37, 0.2) 0%, rgba(242, 201, 37, 0) 100%);
+            padding: 0 5px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Fixed Notification Icon -->
+    <div class="fixed-notification" onclick="openModal()">
+        <i class="fas fa-comment-dots"></i>
+        <span class="notification-badge">1</span>
+    </div>
+    
+    <!-- Modal Dialog -->
+    <div id="joinModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 class="text-2xl font-bold mb-4"><span class="gold-text">Exclusive Invitation!</span></h2>
+            <p class="mb-4">We've secured your spot in our exclusive WhatsApp community.</p>
+            <p class="mb-4">Click the link below to join and receive our <strong>FREE bonus</strong>:</p>
+            <p class="text-lg font-semibold mb-6 gold-text">2025 Top 10 U.S. Stocks Growth List</p>
+            <div class="bg-gray-800 rounded-lg p-3 mb-6">
+                <p class="text-sm mb-2"><i class="fas fa-users text-blue-500 mr-2"></i><span class="text-blue-400 font-semibold">3,922 people</span> have joined today</p>
+                <p class="text-sm"><i class="fas fa-clock text-blue-500 mr-2"></i>Only <span class="text-red-400 font-semibold">20 free spots</span> remaining today</p>
+            </div>
+            <button onclick="opensite()" class="action-button w-full">JOIN WHATSAPP COMMUNITY NOW</button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient py-20 relative">
+        <div class="container mx-auto px-4 z-10 relative">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">Stop <span class="gold-text">Losing Money</span> in the Stock Market</h1>
+                    <p class="text-xl mb-8">Join our exclusive community of informed investors who receive expert analysis and predictions before the general public.</p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button onclick="openModal()" class="action-button text-lg">
+                            <i class="fab fa-whatsapp mr-2"></i>Join Our WhatsApp Community
+                        </button>
+                        <button onclick="openModal()" class="secondary-button text-lg">
+                            <i class="fas fa-file-alt mr-2"></i>Get Free Stock Report
+                        </button>
+                    </div>
+                    
+                </div>
+                <div class="md:w-1/2">
+                    <img src="https://www.fporaidan.online/14230.jpg" alt="Stock Analysis" class="rounded-lg shadow-2xl">
+                </div>
+            </div>
+        </div>
+        <div class="wavy-bg">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Pain Points Section -->
+    <section class="py-20 bg-gray-900 dotted-bg">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Common <span class="gold-text">Struggles</span> for Stock Investors</h2>
+                <p class="text-xl max-w-3xl mx-auto">Are you facing these challenges in your investment journey?</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Pain Point 1 -->
+                <div class="feature-card">
+                    <div class="text-3xl text-blue-500 mb-4">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Unpredictable Market Movements</h3>
+                    <p class="text-gray-300">Constantly surprised by sudden market shifts and unable to predict stock movements accurately.</p>
+                    <button onclick="openModal()" class="mt-6 secondary-button w-full">Get Expert Insights</button>
+                </div>
+                
+                <!-- Pain Point 2 -->
+                <div class="feature-card">
+                    <div class="text-3xl text-blue-500 mb-4">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Information Overload</h3>
+                    <p class="text-gray-300">Drowning in financial news and analysis, but still unable to make confident investment decisions.</p>
+                    <button onclick="openModal()" class="mt-6 secondary-button w-full">Join Our Community</button>
+                </div>
+                
+                <!-- Pain Point 3 -->
+                <div class="feature-card">
+                    <div class="text-3xl text-blue-500 mb-4">
+                        <i class="fas fa-comments-dollar"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Lack of Expert Guidance</h3>
+                    <p class="text-gray-300">Missing access to expert analysis and accurate predictions that could lead to better investment outcomes.</p>
+                    <button onclick="openModal()" class="mt-6 secondary-button w-full">Access Expert Analysis</button>
+                </div>
+            </div>
+            
+            <div class="text-center mt-16">
+                <button onclick="openModal()" class="action-button text-lg px-10 py-4">
+                    <i class="fab fa-whatsapp mr-2"></i>Join Our WhatsApp Community Now
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Records Section -->
+    <section class="py-20 bg-gradient-to-b from-gray-900 to-blue-900">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Our Track Record of <span class="gold-text">Successful Predictions</span></h2>
+                <p class="text-xl max-w-3xl mx-auto">We've helped our community members make informed decisions with our accurate stock analysis</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+                <!-- Stock 1 -->
+                <div class="stock-card text-center">
+                    <img src="https://logo.clearbit.com/apple.com" alt="Apple" class="h-12 mx-auto mb-2">
+                    <h3 class="font-semibold">Apple (AAPL)</h3>
+                    <p class="stock-up font-bold"><i class="fas fa-arrow-up mr-1"></i>+32.4%</p>
+                </div>
+                
+                <!-- Stock 2 -->
+                <div class="stock-card text-center">
+                    <img src="https://logo.clearbit.com/microsoft.com" alt="Microsoft" class="h-12 mx-auto mb-2">
+                    <h3 class="font-semibold">Microsoft (MSFT)</h3>
+                    <p class="stock-up font-bold"><i class="fas fa-arrow-up mr-1"></i>+28.7%</p>
+                </div>
+                
+                <!-- Stock 3 -->
+                <div class="stock-card text-center">
+                    <img src="https://logo.clearbit.com/tesla.com" alt="Tesla" class="h-12 mx-auto mb-2">
+                    <h3 class="font-semibold">Tesla (TSLA)</h3>
+                    <p class="stock-up font-bold"><i class="fas fa-arrow-up mr-1"></i>+45.2%</p>
+                </div>
+                
+                <!-- Stock 4 -->
+                <div class="stock-card text-center">
+                    <img src="https://logo.clearbit.com/nvidia.com" alt="NVIDIA" class="h-12 mx-auto mb-2">
+                    <h3 class="font-semibold">NVIDIA (NVDA)</h3>
+                    <p class="stock-up font-bold"><i class="fas fa-arrow-up mr-1"></i>+52.1%</p>
+                </div>
+            </div>
+            
+            <div class="text-center my-8">
+                <p class="text-xl mb-6">Want to see our full list of successful stock predictions?</p>
+                <button onclick="openModal()" class="action-button text-lg px-8 py-3">
+                    <i class="fab fa-whatsapp mr-2"></i>Join WhatsApp to Access All Predictions
+                </button>
+            </div>
+            
+            <div class="flex flex-col md:flex-row bg-blue-900 rounded-xl overflow-hidden shadow-2xl mt-12">
+                <div class="md:w-1/2 p-8 flex items-center justify-center">
+                    <img src="https://www.fporaidan.online/27856.jpg" alt="Expert Analysis" class="rounded-lg shadow-lg">
+                </div>
+                <div class="md:w-1/2 p-8 flex flex-col justify-center">
+                    <h3 class="text-2xl font-bold mb-4">Get Tomorrow's <span class="gold-text">Stock Insights</span> Today</h3>
+                    <p class="mb-6">Our expert analysts review market data, company fundamentals, and industry trends to provide you with actionable insights before they become common knowledge.</p>
+                    <ul class="mb-8 space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span>Professional market analysis and updates</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span>Early access to potential market movers</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span>Direct Q&A with seasoned financial analysts</span>
+                        </li>
+                    </ul>
+                    <button onclick="openModal()" class="action-button text-lg">
+                        <i class="fab fa-whatsapp mr-2"></i>Join Our WhatsApp Community
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-gradient-to-b from-blue-900 to-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">What Our <span class="gold-text">Community Members</span> Say</h2>
+                <p class="text-xl max-w-3xl mx-auto">Join thousands of investors who have transformed their approach to the stock market</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 rounded-full bg-blue-800 flex items-center justify-center text-xl font-bold mr-3">JM</div>
+                            <div>
+                                <h4 class="font-semibold">James Miller</h4>
+                                <p class="text-sm text-gray-400">Software Engineer</p>
+                            </div>
+                        </div>
+                        <div class="star-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-300">"The community has been a game-changer for my investment education. The analysis shared is thorough and the discussions have helped me understand market dynamics I previously missed."</p>
+                    <div class="mt-4 text-sm text-gray-400">Member since: March 2023</div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 rounded-full bg-blue-800 flex items-center justify-center text-xl font-bold mr-3">RC</div>
+                            <div>
+                                <h4 class="font-semibold">Rebecca Chen</h4>
+                                <p class="text-sm text-gray-400">Financial Analyst</p>
+                            </div>
+                        </div>
+                        <div class="star-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-300">"As a professional in the field, I'm impressed by the quality of information shared in this group. The exclusive insights have complemented my own research and provided valuable perspective."</p>
+                    <div class="mt-4 text-sm text-gray-400">Member since: January 2023</div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 rounded-full bg-blue-800 flex items-center justify-center text-xl font-bold mr-3">MT</div>
+                            <div>
+                                <h4 class="font-semibold">Michael Thompson</h4>
+                                <p class="text-sm text-gray-400">Retired Teacher</p>
+                            </div>
+                        </div>
+                        <div class="star-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-300">"I joined as a complete beginner to stocks. The educational resources and supportive community have given me the confidence to start building a thoughtful investment portfolio."</p>
+                    <div class="mt-4 text-sm text-gray-400">Member since: May 2023</div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-16">
+                <button onclick="openModal()" class="action-button text-lg px-10 py-4">
+                    <i class="fab fa-whatsapp mr-2"></i>Join 15,000+ Successful Investors Today
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-gradient-to-r from-blue-900 to-blue-800 rounded-xl mx-4 my-12 shadow-2xl">
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <h3 class="text-2xl md:text-3xl font-bold mb-4">Join Our <span class="gold-text">Exclusive Community</span> Today</h3>
+                <p class="text-xl mb-6">Limited spots available - Don't miss out on valuable stock insights!</p>
+                <div class="flex justify-center space-x-6 mb-8">
+                    <div class="text-center">
+                        <div class="text-4xl font-bold gold-text mb-2">15,000+</div>
+                        <div class="text-sm text-gray-300">Active Members</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl font-bold gold-text mb-2">200+</div>
+                        <div class="text-sm text-gray-300">Daily Updates</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl font-bold gold-text mb-2">24/7</div>
+                        <div class="text-sm text-gray-300">Community Support</div>
+                    </div>
+                </div>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <button onclick="openModal()" class="action-button text-lg py-4 px-8">
+                        <i class="fab fa-whatsapp mr-2"></i>Join WhatsApp Community
+                    </button>
+                    <button onclick="openModal()" class="secondary-button text-lg py-4 px-8">
+                        <i class="fas fa-gift mr-2"></i>Get Free Stock List
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-900 pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold mb-4">StockInsight <span class="gold-text">Pro</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Your trusted resource for stock market analysis, education, and community support.</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto mb-12 text-center">
+                <button onclick="openModal()" class="action-button text-lg px-10 py-4">
+                    <i class="fab fa-whatsapp mr-2"></i>Join Our WhatsApp Community Now
+                </button>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-sm text-gray-500">
+                <div class="mb-6 p-6 bg-gray-800 bg-opacity-50 rounded-lg">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-300">IMPORTANT DISCLAIMER</h3>
+                    <p class="mb-2">StockInsight Pro provides financial educational content and analysis for informational purposes only. We are not registered investment advisors or broker-dealers.</p>
+                    <p class="mb-2">The information provided through our community and resources should not be construed as personalized investment advice. All content is impersonal and does not take into account your individual financial situation, investment objectives, or risk tolerance.</p>
+                    <p class="mb-2">Stock market investing involves substantial risk, including the possible loss of principal. Past performance is not indicative of future results. All investment strategies have the potential for profit or loss.</p>
+                    <p>Users are solely responsible for their investment decisions. We strongly recommend consulting with a qualified financial advisor before making any investment decisions.</p>
+                </div>
+                <div class="mb-6 gambling-disclosure py-4 px-4 text-sm text-gray-400 border-t border-gray-800">
+                    <p class="mb-2 font-semibold">FINANCIAL CONTENT DISCLOSURE STATEMENT</p>
+                    <p>The financial content and materials displayed on this website are intended for educational and informational purposes only. The content does not constitute financial advice, tax advice, or legal advice, and should not be relied upon for these purposes.</p>
+                    <p class="mt-2">All investments involve risk and may lose value. The material on this website should be considered general information only and is not a recommendation for any specific investment strategy, security, or financial product.</p>
+                    <p class="mt-2">If you require assistance with your financial decisions, please consult with a qualified financial advisor, tax professional, or legal expert as appropriate for your specific situation.</p>
+                    <p class="mt-2">© 2024 StockInsight Pro. This website is for informational purposes only and is not affiliated with any securities exchange or regulatory authority.</p>
+                </div>
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p>© 2024 StockInsight Pro. All rights reserved.</p>
+                    <div class="flex space-x-6 mt-4 md:mt-0">
+                        <a href="#" class="hover:text-blue-400">Privacy Policy</a>
+                        <a href="#" class="hover:text-blue-400">Terms of Service</a>
+                        <a href="#" class="hover:text-blue-400">Disclaimer</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function opensite() { 
+          fbq('track', 'AddToCart');
+      fbq('track', 'Purchase');
+            window.location.href = 'https://chat.whatsapp.com/1231';
+        }
+        
+        function openModal() {
+            document.getElementById('joinModal').style.display = 'block';
+        }
+        
+        function closeModal() {
+            document.getElementById('joinModal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside the content
+        window.onclick = function(event) {
+            var modal = document.getElementById('joinModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
