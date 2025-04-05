@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AI Stock Diagnosis System | Malaysia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'whatsapp': '#25D366',
+                        'dark-blue': '#0F1A33',
+                        'medium-blue': '#1B2A4A',
+                        'light-blue': '#4776E6',
+                        'accent-purple': '#8A3FFC',
+                        'accent-pink': '#FF2C8A',
+                        'stock-green': '#00C288',
+                        'stock-red': '#FF4D4D',
+                        'deep-bg': '#0A0D1E',
+                        'mystic-purple': '#2D1B4A',
+                    },
+                    fontFamily: {
+                        'sans': ['Poppins', 'sans-serif'],
+                    },
+                    keyframes: {
+                        pulse: {
+                            '0%, 100%': { opacity: 1 },
+                            '50%': { opacity: 0.6 }
+                        },
+                        floatUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: 0 },
+                            '100%': { transform: 'translateY(0)', opacity: 1 }
+                        },
+                        fadeIn: {
+                            '0%': { opacity: 0 },
+                            '100%': { opacity: 1 }
+                        },
+                        glow: {
+                            '0%, 100%': { boxShadow: '0 0 10px rgba(79, 209, 197, 0.5)' },
+                            '50%': { boxShadow: '0 0 25px rgba(79, 209, 197, 0.8)' }
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float-up': 'floatUp 0.6s ease-out forwards',
+                        'fade-in': 'fadeIn 1s ease-out forwards',
+                        'glow': 'glow 2s ease-in-out infinite'
+                    }
+                }
+            }
+        };
+
+        function opensite() {
+            window.open('https://wa.me/message/XXXXXXXXXXXX', '_blank');
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            background-color: #0A0D1E;
+            color: #E2E8F0;
+        }
+        
+        .whatsapp-icon {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            width: 60px;
+            height: 60px;
+            background-color: #25D366;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .whatsapp-icon:hover {
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #FF4D4D;
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            font-weight: bold;
+            border: 2px solid #0A0D1E;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.7);
+            }
+            70% {
+                transform: scale(1.1);
+                box-shadow: 0 0 0 10px rgba(255, 77, 77, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 77, 77, 0);
+            }
+        }
+        
+        .btn-pulse {
+            animation: btnPulse 2s infinite;
+        }
+        
+        @keyframes btnPulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+            70% {
+                transform: scale(1.03);
+                box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(125deg, #0A0D1E 0%, #1B2A4A 50%, #2D1B4A 100%);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #111633 0%, #1F1B30 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(39, 128, 227, 0.15);
+        }
+        
+        .animate-grid-element {
+            animation: fadeIn 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .animate-grid-element:nth-child(1) { animation-delay: 0.1s; }
+        .animate-grid-element:nth-child(2) { animation-delay: 0.2s; }
+        .animate-grid-element:nth-child(3) { animation-delay: 0.3s; }
+        .animate-grid-element:nth-child(4) { animation-delay: 0.4s; }
+        .animate-grid-element:nth-child(5) { animation-delay: 0.5s; }
+        .animate-grid-element:nth-child(6) { animation-delay: 0.6s; }
+        
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* AI Animation Elements */
+        .ai-scanner {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 12px;
+            background-color: #0A0D1E;
+            box-shadow: 0 10px 30px rgba(26, 44, 86, 0.3);
+            border: 1px solid rgba(71, 118, 230, 0.2);
+        }
+        
+        .scan-line {
+            position: absolute;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #4776E6, transparent);
+            top: 0;
+            animation: scanMove 3s linear infinite;
+            box-shadow: 0 0 15px rgba(71, 118, 230, 0.8);
+        }
+        
+        @keyframes scanMove {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+        
+        .data-point {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #8A3FFC;
+            animation: dataPoint 5s infinite;
+            opacity: 0;
+            box-shadow: 0 0 10px rgba(138, 63, 252, 0.7);
+        }
+        
+        @keyframes dataPoint {
+            0% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0); }
+        }
+        
+        /* Stock Ticker Animation */
+        .stock-ticker {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            height: 80px;
+            border-radius: 8px;
+            background-color: rgba(15, 26, 51, 0.9);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(71, 118, 230, 0.2);
+        }
+        
+        .ticker-wrapper {
+            display: flex;
+            animation: tickerMove 20s linear infinite;
+            width: max-content;
+        }
+        
+        @keyframes tickerMove {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 13, 30, 0.9);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+        }
+        
+        .progress-box {
+            background-color: #1B2A4A;
+            border-radius: 12px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            border: 1px solid rgba(71, 118, 230, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .progress-bar {
+            height: 8px;
+            width: 100%;
+            background-color: #0F1A33;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #25D366, #8A3FFC);
+            border-radius: 4px;
+            transition: width 1s ease;
+            box-shadow: 0 0 15px rgba(71, 118, 230, 0.5);
+        }
+        
+        .result-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 13, 30, 0.9);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+        }
+        
+        .result-box {
+            background-color: #1B2A4A;
+            border-radius: 12px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            border: 1px solid rgba(71, 118, 230, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .pdf-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .pdf-item {
+            background-color: #0F1A33;
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 48%;
+            border: 1px solid rgba(71, 118, 230, 0.2);
+        }
+        
+        .limited-slots {
+            display: inline-block;
+            background-color: rgba(255, 45, 85, 0.2);
+            color: #FF4D4D;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-left: 10px;
+            border: 1px solid rgba(255, 45, 85, 0.4);
+            animation: glow 2s infinite;
+        }
+        
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 5px rgba(255, 45, 85, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 15px rgba(255, 45, 85, 0.8);
+            }
+        }
+        
+        .ai-image {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(71, 118, 230, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .ai-image:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(71, 118, 230, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- WhatsApp Icon -->
+    <div class="whatsapp-icon" onclick="opensite()">
+        <i class="fab fa-whatsapp text-white text-3xl"></i>
+        <div class="notification-badge">1</div>
+    </div>
+
+    <!-- Progress Modal -->
+    <div class="progress-container" id="progressModal">
+        <div class="progress-box">
+            <h3 class="text-xl font-bold text-white mb-2">Analyzing Market Data</h3>
+            <p class="text-gray-300 mb-2" id="progressText">Integrating market analysis, news, and historical data...</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p class="text-sm text-gray-400">This may take a moment</p>
+        </div>
+    </div>
+    
+    <!-- Result Modal -->
+    <div class="result-container" id="resultModal">
+        <div class="result-box">
+            <div class="bg-green-900/30 p-3 rounded-lg mb-4 border border-green-700/30">
+                <h3 class="text-xl font-bold text-white mb-2">AI Analysis Complete!</h3>
+                <p class="text-green-400 font-semibold">Our AI system has successfully predicted 5 rising stocks.</p>
+            </div>
+            
+            <div class="pdf-container">
+                <div class="pdf-item shadow">
+                    <i class="far fa-file-pdf text-stock-red text-3xl mb-2"></i>
+                    <p class="font-bold text-gray-200 text-sm">Detailed Prediction Report</p>
+                    <p class="text-xs text-gray-400 mt-1">PDF Document</p>
+                </div>
+                <div class="pdf-item shadow">
+                    <i class="far fa-file-pdf text-accent-purple text-3xl mb-2"></i>
+                    <p class="font-bold text-gray-200 text-sm">2025 Potential Stocks List</p>
+                    <p class="text-xs text-gray-400 mt-1">PDF Document</p>
+                </div>
+            </div>
+            
+            <p class="my-4 text-gray-300">Add our expert to WhatsApp to receive your free detailed prediction report:</p>
+            
+            <button onclick="opensite()" class="btn-pulse w-full bg-whatsapp hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-all flex items-center justify-center">
+                <i class="fab fa-whatsapp mr-2"></i>
+                Get Free Reports via WhatsApp
+            </button>
+            
+            <button class="mt-4 text-sm text-gray-400 hover:text-gray-200" onclick="document.getElementById('resultModal').style.display = 'none'">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-deep-bg shadow-md py-4 border-b border-light-blue/20">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="h-10 w-10 bg-light-blue rounded-lg flex items-center justify-center text-white font-bold text-xl">AI</div>
+                <div class="ml-3">
+                    <h1 class="text-lg md:text-xl font-bold text-white">StockSense AI</h1>
+                    <p class="text-sm text-gray-400">Intelligent Stock Analysis</p>
+                </div>
+            </div>
+            <div class="flex items-center">
+                <button onclick="showProgress()" class="hidden md:flex items-center bg-whatsapp hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all">
+                    <i class="fas fa-chart-line mr-2"></i>
+                    Analyze Stocks
+                </button>
+                <div class="limited-slots ml-2">Only 30 slots left!</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient text-white py-16 md:py-24">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-8">
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+                        AI-Powered Stock Diagnosis System
+                    </h2>
+                    <div class="bg-mystic-purple/40 backdrop-blur-sm p-5 rounded-lg mb-8 border border-accent-purple/30">
+                        <h3 class="text-xl font-semibold mb-4">Common Investing Challenges:</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-center">
+                                <div class="flex-shrink-0 h-6 w-6 bg-accent-pink rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-times text-white text-xs"></i>
+                                </div>
+                                <p>Uncertain market conditions causing constant anxiety</p>
+                            </li>
+                            <li class="flex items-center">
+                                <div class="flex-shrink-0 h-6 w-6 bg-accent-pink rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-times text-white text-xs"></i>
+                                </div>
+                                <p>Difficulty identifying profitable opportunities</p>
+                            </li>
+                            <li class="flex items-center">
+                                <div class="flex-shrink-0 h-6 w-6 bg-accent-pink rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-times text-white text-xs"></i>
+                                </div>
+                                <p>Hours wasted analyzing stocks with poor returns</p>
+                            </li>
+                            <li class="flex items-center">
+                                <div class="flex-shrink-0 h-6 w-6 bg-accent-pink rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-times text-white text-xs"></i>
+                                </div>
+                                <p>Inconsistent results due to emotional decision-making</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="flex items-center">
+                        <button onclick="showProgress()" class="btn-pulse bg-whatsapp hover:bg-green-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-all">
+                            <i class="fas fa-robot mr-2"></i>
+                            Get AI Stock Analysis
+                        </button>
+                        <div class="limited-slots ml-3">Only 30 slots left!</div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <!-- AI Animation Container -->
+                    <div class="ai-scanner">
+                        <div class="scan-line"></div>
+                        <!-- Stock chart visualization background -->
+                        <div class="absolute inset-0 p-4 flex flex-col justify-between">
+                            <div class="h-3/4 w-full relative overflow-hidden rounded-lg">
+                                <!-- SVG line chart -->
+                                <svg class="w-full h-full" viewBox="0 0 500 200" preserveAspectRatio="none">
+                                    <path d="M0,150 C50,120 100,180 150,120 C200,60 250,80 300,50 C350,20 400,40 500,0" 
+                                          stroke="#25D366" 
+                                          stroke-width="3" 
+                                          fill="none" />
+                                    <path d="M0,150 C50,120 100,180 150,120 C200,60 250,80 300,50 C350,20 400,40 500,0" 
+                                          stroke="rgba(37, 211, 102, 0.2)" 
+                                          stroke-width="12" 
+                                          fill="none" />
+                                </svg>
+                                
+                                <!-- Animated Data Points -->
+                                <div class="data-point" style="top: 30%; left: 20%; animation-delay: 0.5s;"></div>
+                                <div class="data-point" style="top: 60%; left: 40%; animation-delay: 1.2s;"></div>
+                                <div class="data-point" style="top: 25%; left: 65%; animation-delay: 1.8s;"></div>
+                                <div class="data-point" style="top: 70%; left: 85%; animation-delay: 2.5s;"></div>
+                                <div class="data-point" style="top: 45%; left: 55%; animation-delay: 3.2s;"></div>
+                            </div>
+                            
+                            <!-- AI Processing indicators -->
+                            <div class="flex justify-between items-center mt-2">
+                                <div class="text-xs text-white bg-light-blue/80 px-2 py-1 rounded animate-pulse-slow">Pattern Recognition</div>
+                                <div class="text-xs text-white bg-accent-purple/80 px-2 py-1 rounded animate-pulse-slow" style="animation-delay: 1s;">AI Analysis</div>
+                                <div class="text-xs text-white bg-accent-pink/80 px-2 py-1 rounded animate-pulse-slow" style="animation-delay: 2s;">Prediction Model</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Stock Ticker -->
+                    <div class="stock-ticker mt-4">
+                        <div class="ticker-wrapper">
+                            <!-- First set -->
+                            <div class="flex items-center p-2 mx-4">
+                                <div class="bg-dark-blue rounded px-3 py-1 mr-3">
+                                    <span class="font-bold text-gray-200">MY**B</span>
+                                </div>
+                                <div>
+                                    <span class="text-sm text-gray-400">Diagnosis: Rise Probability</span>
+                                    <span class="ml-2 font-bold text-stock-red">+1.70%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center p-2 mx-4">
+                                <div class="bg-dark-blue rounded px-3 py-1 mr-3">
+                                    <span class="font-bold text-gray-200">YT**C</span>
+                                </div>
+                                <div>
+                                    <span class="text-sm text-gray-400">Diagnosis: Rise Probability</span>
+                                    <span class="ml-2 font-bold text-stock-red">+2.80%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center p-2 mx-4">
+                                <div class="bg-dark-blue rounded px-3 py-1 mr-3">
+                                    <span class="font-bold text-gray-200">SU**X</span>
+                                </div>
+                                <div>
+                                    <span class="text-sm text-gray-400">Diagnosis: Fall Probability</span>
+                                    <span class="ml-2 font-bold text-stock-green">-4.89%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center p-2 mx-4">
+                                <div class="bg-dark-blue rounded px-3 py-1 mr-3">
+                                    <span class="font-bold text-gray-200">HI**D</span>
+                                </div>
+                                <div>
+                                    <span class="text-sm text-gray-400">Diagnosis: Fall Probability</span>
+                                    <span class="ml-2 font-bold text-stock-green">-7.05%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center p-2 mx-4">
+                                <div class="bg-dark-blue rounded px-3 py-1 mr-3">
+                                    <span class="font-bold text-gray-200">MN**J</span>
+                                </div>
+                                <div>
+                                    <span class="text-sm text-gray-400">Diagnosis: Rise Probability</span>
+                                    <span class="ml-2 font-bold text-stock-red">+3.08%</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Duplicate for seamless loop -->
+                            <div class="flex items-center p-2 mx-4">
+                                <div class="bg-dark-blue rounded px-3 py-1 mr-3">
+                                    <span class="font-bold text-gray-200">MY**B</span>
+                                </div>
+                                <div>
+                                    <span class="text-sm text-gray-400">Diagnosis: Rise Probability</span>
+                                    <span class="ml-2 font-bold text-stock-red">+1.70%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center p-2 mx-4">
+                                <div class="bg-dark-blue rounded px-3 py-1 mr-3">
+                                    <span class="font-bold text-gray-200">YT**C</span>
+                                </div>
+                                <div>
+                                    <span class="text-sm text-gray-400">Diagnosis: Rise Probability</span>
+                                    <span class="ml-2 font-bold text-stock-red">+2.80%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center p-2 mx-4">
+                                <div class="bg-dark-blue rounded px-3 py-1 mr-3">
+                                    <span class="font-bold text-gray-200">SU**X</span>
+                                </div>
+                                <div>
+                                    <span class="text-sm text-gray-400">Diagnosis: Fall Probability</span>
+                                    <span class="ml-2 font-bold text-stock-green">-4.89%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center p-2 mx-4">
+                                <div class="bg-dark-blue rounded px-3 py-1 mr-3">
+                                    <span class="font-bold text-gray-200">HI**D</span>
+                                </div>
+                                <div>
+                                    <span class="text-sm text-gray-400">Diagnosis: Fall Probability</span>
+                                    <span class="ml-2 font-bold text-stock-green">-7.05%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center p-2 mx-4">
+                                <div class="bg-dark-blue rounded px-3 py-1 mr-3">
+                                    <span class="font-bold text-gray-200">MN**J</span>
+                                </div>
+                                <div>
+                                    <span class="text-sm text-gray-400">Diagnosis: Rise Probability</span>
+                                    <span class="ml-2 font-bold text-stock-red">+3.08%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section with Images -->
+    <section class="py-16 px-4 bg-deep-bg">
+        <div class="container mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-white mb-4">How Our AI-Powered Stock Analysis Works</h2>
+                <p class="text-lg text-gray-300 max-w-3xl mx-auto">Our advanced artificial intelligence system analyzes multiple data points to provide accurate stock predictions and insights.</p>
+            </div>
+            
+            <div class="flex flex-col md:flex-row gap-8 items-center">
+                <div class="md:w-1/2 ai-image animate-grid-element">
+                    <img src="https://www.vpdsotpo.online/malaigupiao/1.jpg" alt="AI Stock Analysis" class="w-full h-auto rounded-lg shadow-lg" />
+                    <div class="p-4 bg-dark-blue/80">
+                        <h3 class="text-xl font-bold text-white mb-2">Precision Market Analysis</h3>
+                        <p class="text-gray-300">Our AI processes millions of data points to identify optimal trading patterns and opportunities.</p>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2 ai-image animate-grid-element" style="animation-delay: 0.3s;">
+                    <img src="https://www.vpdsotpo.online/malaigupiao/915357.jpg" alt="AI Predictive Technology" class="w-full h-auto rounded-lg shadow-lg" />
+                    <div class="p-4 bg-dark-blue/80">
+                        <h3 class="text-xl font-bold text-white mb-2">Advanced Prediction Algorithms</h3>
+                        <p class="text-gray-300">Real-time pattern recognition with neural networks to forecast market movements.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center">
+                <div class="inline-flex items-center">
+                    <button onclick="showProgress()" class="btn-pulse bg-whatsapp hover:bg-green-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-all">
+                        <i class="fas fa-search-dollar mr-2"></i>
+                        Get AI Stock Recommendations
+                    </button>
+                    <div class="limited-slots ml-3">Only 30 slots left!</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-16 px-4 gradient-bg">
+        <div class="container mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-white mb-4">What Our Users Say</h2>
+                <p class="text-lg text-gray-300 max-w-3xl mx-auto">Join thousands of satisfied investors who have transformed their trading approach with our AI system.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-dark-blue p-6 rounded-xl shadow-md border border-light-blue/20">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-blue-900/50 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-blue-400 font-bold">MH</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white">Michael Hassan</h4>
+                            <p class="text-sm text-gray-400">Kuala Lumpur</p>
+                        </div>
+                    </div>
+                    <div class="flex text-yellow-400 mb-3">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-300">"The AI analysis has completely transformed my investment strategy. I've seen consistent gains by following the system's recommendations. The predictions have been surprisingly accurate!"</p>
+                </div>
+                
+                <div class="bg-dark-blue p-6 rounded-xl shadow-md border border-light-blue/20">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-pink-900/50 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-pink-400 font-bold">SL</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white">Sarah Lim</h4>
+                            <p class="text-sm text-gray-400">Penang</p>
+                        </div>
+                    </div>
+                    <div class="flex text-yellow-400 mb-3">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="text-gray-300">"As a busy professional, I never had time to analyze stocks properly. This system does all the work for me. It helped me avoid significant losses during market downturns and identify winning stocks."</p>
+                </div>
+                
+                <div class="bg-dark-blue p-6 rounded-xl shadow-md border border-light-blue/20">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-green-900/50 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-green-400 font-bold">RA</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white">Raj Ahmad</h4>
+                            <p class="text-sm text-gray-400">Johor Bahru</p>
+                        </div>
+                    </div>
+                    <div class="flex text-yellow-400 mb-3">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-300">"I was skeptical about AI predictions at first, but after three months of using the system, I'm completely convinced. The analysis is thorough and the predictions have been spot on most of the time."</p>
+                </div>
+            </div>
+            
+            <div class="mt-16 bg-dark-blue p-6 rounded-xl shadow-md border border-light-blue/20">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-2/3 mb-6 md:mb-0 md:pr-6">
+                        <h3 class="text-2xl font-bold text-white mb-4">Join Over 10,000+ Malaysian Investors</h3>
+                        <p class="text-gray-300 mb-4">Get access to our AI-powered stock analysis system today and receive a detailed prediction report for free. Don't miss out on potential market opportunities!</p>
+                        <div class="flex flex-wrap gap-4">
+                            <div class="flex items-center text-accent-purple">
+                                <i class="fas fa-check-circle mr-2"></i>
+                                <span class="text-gray-300">Highly accurate predictions</span>
+                            </div>
+                            <div class="flex items-center text-accent-purple">
+                                <i class="fas fa-check-circle mr-2"></i>
+                                <span class="text-gray-300">Real-time market insights</span>
+                            </div>
+                            <div class="flex items-center text-accent-purple">
+                                <i class="fas fa-check-circle mr-2"></i>
+                                <span class="text-gray-300">Personalized investment advice</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:w-1/3 flex items-center">
+                        <button onclick="showProgress()" class="btn-pulse w-full bg-accent-purple hover:bg-purple-700 text-white font-bold py-4 px-6 rounded-lg shadow-lg transition-all flex items-center justify-center">
+                            <i class="fas fa-robot mr-2"></i>
+                            Start AI Analysis Now
+                        </button>
+                        <div class="limited-slots ml-3">Only 30 slots left!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-deep-bg text-white py-10 px-4 border-t border-light-blue/20">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">StockSense AI</h3>
+                    <p class="text-gray-300 mb-4">Using artificial intelligence to transform stock market analysis and prediction for Malaysian investors.</p>
+                    <button onclick="opensite()" class="bg-whatsapp hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg text-sm transition-all">
+                        <i class="fab fa-whatsapp mr-2"></i>
+                        Contact via WhatsApp
+                    </button>
+                    <div class="limited-slots mt-2 inline-block">Only 30 slots left!</div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Our Services</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>AI Stock Analysis</li>
+                        <li>Market Trend Prediction</li>
+                        <li>Risk Assessment</li>
+                        <li>Portfolio Optimization</li>
+                        <li>Investment Education</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Important Disclaimers</h3>
+                    <div class="text-sm text-gray-400">
+                        <p class="mb-2"><strong>Risk Warning:</strong> Investment involves risk. The value of investments can go down as well as up and you may not get back the amount invested.</p>
+                        <p class="mb-2"><strong>Not Financial Advice:</strong> The information provided on this site is for educational purposes only and should not be considered as financial advice.</p>
+                        <p class="mb-2"><strong>Past Performance:</strong> Past performance is not indicative of future results.</p>
+                        <p class="mb-2"><strong>Data Disclaimer:</strong> While we strive for accuracy, we cannot guarantee the completeness or reliability of the data presented.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-6 text-center"> 
+                <p class="text-gray-500 text-xs">© 2023 StockSense AI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Detect dark mode preference
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+        
+        // Function to show progress modal and simulate loading
+        function showProgress() {
+            const progressModal = document.getElementById('progressModal');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            
+            // Show progress modal
+            progressModal.style.display = 'flex';
+            
+            // Simulate progress for market analysis
+            setTimeout(() => {
+                progressFill.style.width = '30%';
+                progressText.textContent = 'Analyzing market data...';
+            }, 500);
+            
+            // Simulate progress for news analysis
+            setTimeout(() => {
+                progressFill.style.width = '60%';
+                progressText.textContent = 'Processing latest news and trends...';
+            }, 1000);
+            
+            // Simulate progress for historical data
+            setTimeout(() => {
+                progressFill.style.width = '90%';
+                progressText.textContent = 'Integrating historical pattern analysis...';
+            }, 1500);
+            
+            // Complete progress and show result
+            setTimeout(() => {
+                progressModal.style.display = 'none';
+                document.getElementById('resultModal').style.display = 'flex';
+            }, 2000);
+        }
+        
+        // Create dynamic data points for AI visualization
+        document.addEventListener('DOMContentLoaded', () => {
+            const aiScanner = document.querySelector('.ai-scanner');
+            for (let i = 0; i < 15; i++) {
+                const dataPoint = document.createElement('div');
+                dataPoint.className = 'data-point';
+                dataPoint.style.top = `${Math.random() * 100}%`;
+                dataPoint.style.left = `${Math.random() * 100}%`;
+                dataPoint.style.animationDelay = `${Math.random() * 5}s`;
+                aiScanner.appendChild(dataPoint);
+            }
+        });
+    </script>
+</body>
+</html>
