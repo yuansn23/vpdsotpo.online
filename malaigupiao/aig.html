@@ -1,6 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+!function(f,b,e,v,n,t,s) {
+    if(f.fbq) return;
+    n=f.fbq=function(){
+        n.callMethod ? n.callMethod.apply(n,arguments) : n.queue.push(arguments)
+    };
+    if(!f._fbq) f._fbq=n;
+    n.push=n;
+    n.loaded=!0;
+    n.version='2.0';
+    n.queue=[];
+
+    t=b.createElement(e);
+    t.async=!0;
+    t.src=v;
+    s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)
+}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+
+// 提取 URL 中的 fbid 参数
+function getQueryParam(param) {
+    var urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+
+var fbid = getQueryParam('fbid');
+if (fbid) {
+    fbq('init', fbid);
+    fbq('track', 'PageView');
+}
+</script>
+ 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AI Stock Diagnosis System | Malaysia</title>
@@ -54,7 +86,9 @@
         };
 
         function opensite() {
-            window.open('https://wa.me/message/XXXXXXXXXXXX', '_blank');
+             fbq('track', 'AddToCart');
+      fbq('track', 'Purchase');
+            window.location.href = 'https://chat.whatsapp.com/1231'; 
         }
     </script>
     <style>
@@ -425,7 +459,7 @@
                     <i class="fas fa-chart-line mr-2"></i>
                     Analyze Stocks
                 </button>
-                <div class="limited-slots ml-2">Only 30 slots left!</div>
+                <div class="limited-slots ml-2">30 free spots remaining</div>
             </div>
         </div>
     </header>
@@ -472,7 +506,7 @@
                             <i class="fas fa-robot mr-2"></i>
                             Get AI Stock Analysis
                         </button>
-                        <div class="limited-slots ml-3">Only 30 slots left!</div>
+                        <div class="limited-slots ml-3">30 free spots remaining</div>
                     </div>
                 </div>
                 
@@ -687,7 +721,7 @@
                         <i class="fas fa-search-dollar mr-2"></i>
                         Get AI Stock Recommendations
                     </button>
-                    <div class="limited-slots ml-3">Only 30 slots left!</div>
+                    <div class="limited-slots ml-3">30 free spots remaining</div>
                 </div>
             </div>
         </div>
@@ -788,7 +822,7 @@
                             <i class="fas fa-robot mr-2"></i>
                             Start AI Analysis Now
                         </button>
-                        <div class="limited-slots ml-3">Only 30 slots left!</div>
+                        <div class="limited-slots ml-3">30 free spots remaining</div>
                     </div>
                 </div>
             </div>
@@ -806,7 +840,7 @@
                         <i class="fab fa-whatsapp mr-2"></i>
                         Contact via WhatsApp
                     </button>
-                    <div class="limited-slots mt-2 inline-block">Only 30 slots left!</div>
+                    <div class="limited-slots mt-2 inline-block">30 free spots remaining</div>
                 </div>
                 
                 <div>
