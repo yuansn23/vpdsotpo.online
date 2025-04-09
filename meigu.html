@@ -2,33 +2,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-648554957"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <script>
+!function(f,b,e,v,n,t,s) {
+    if(f.fbq) return;
+    n=f.fbq=function(){
+        n.callMethod ? n.callMethod.apply(n,arguments) : n.queue.push(arguments)
+    };
+    if(!f._fbq) f._fbq=n;
+    n.push=n;
+    n.loaded=!0;
+    n.version='2.0';
+    n.queue=[];
 
-  gtag('config', 'AW-648554957');
-</script>
+    t=b.createElement(e);
+    t.async=!0;
+    t.src=v;
+    s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)
+}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
 
-    <!-- Event snippet for 4.3 conversion page
-In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
-<script>
-function gtag_report_conversion(url) {
-  var callback = function () {
-    if (typeof(url) != 'undefined') {
-      window.location = url;
-    }
-  };
-  gtag('event', 'conversion', {
-      'send_to': 'AW-648554957/tDE4COrsqbMaEM3ToLUC',
-      'transaction_id': '',
-      'event_callback': callback
-  });
-  return false;
+// 提取 URL 中的 fbid 参数
+function getQueryParam(param) {
+    var urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+
+var fbid = getQueryParam('fbid');
+if (fbid) {
+    fbq('init', fbid);
+    fbq('track', 'PageView');
 }
 </script>
+
+
+  
 
     
     <meta charset="UTF-8">
@@ -654,8 +661,9 @@ function gtag_report_conversion(url) {
 
     <script>
         function opensite() {
-            gtag_report_conversion();
-            window.location.href = 'https://chat.whatsapp.com/CorpWa1CCm2KDaPLblVSOk';
+              fbq('track', 'AddToCart');
+  fbq('track', 'Purchase'); 
+            window.location.href = 'https://www.baidu.com';
         }
         
         function openModal() {
