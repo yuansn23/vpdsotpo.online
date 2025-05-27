@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>株式知識共有コミュニティ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap');
+        
+        :root {
+            --dark-bg: #121212;
+            --dark-card: #1E1E1E;
+            --dark-card-hover: #292929;
+            --dark-text: #F8F9FA;
+            --dark-text-muted: #AAB2BD;
+            
+            --accent: #00E676; /* 明るい緑 */
+            --accent-hover: #00C853;
+            --accent-dark: #00B84D;
+            
+            --secondary-accent: #FF4081; /* 明るいピンク */
+            --secondary-accent-hover: #F50057;
+            
+            --gradient-1: linear-gradient(135deg, #00E676 0%, #00B84D 100%);
+            --gradient-2: linear-gradient(135deg, #FF4081 0%, #F50057 100%);
+            
+            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 8px 15px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.3);
+            
+            --border-radius: 12px;
+            --border-radius-sm: 8px;
+            --border-radius-lg: 16px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+        }
+        
+        /* アニメーション */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.7);
+            }
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(0, 230, 118, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(0, 230, 118, 0);
+            }
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes glowText {
+            0%, 100% {
+                text-shadow: 0 0 5px rgba(0, 230, 118, 0.5), 0 0 15px rgba(0, 230, 118, 0.3);
+            }
+            50% {
+                text-shadow: 0 0 20px rgba(0, 230, 118, 0.8), 0 0 30px rgba(0, 230, 118, 0.5);
+            }
+        }
+        
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        /* ナビゲーション */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(18, 18, 18, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--dark-text);
+        }
+        
+        /* セクション共通 */
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        
+        .section-title.centered {
+            text-align: center;
+            display: block;
+        }
+        
+        .section-title.centered::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .text-accent {
+            color: var(--accent);
+        }
+        
+        .text-secondary-accent {
+            color: var(--secondary-accent);
+        }
+        
+        /* ヒーローセクション */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background-color: var(--dark-bg);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(0, 230, 118, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 64, 129, 0.15) 0%, transparent 50%);
+            z-index: 1;
+        }
+        
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-content {
+            animation: fadeInUp 1s ease forwards;
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: var(--gradient-1);
+            color: var(--dark-bg);
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+        
+        .hero-title .highlight {
+            position: relative;
+            color: var(--accent);
+            animation: glowText 3s infinite;
+        }
+        
+        .hero-title .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background-color: var(--accent);
+            opacity: 0.2;
+            border-radius: 10px;
+        }
+        
+        .hero-description {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: var(--dark-text-muted);
+        }
+        
+        .hero-image {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .hero-image img {
+            max-width: 100%;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-lg);
+            border: 2px solid rgba(0, 230, 118, 0.3);
+        }
+        
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: 20px;
+            bottom: 20px;
+            border: 2px solid var(--accent);
+            border-radius: var(--border-radius-lg);
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        .hero-image::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            right: -30px;
+            width: 120px;
+            height: 120px;
+            background: var(--gradient-2);
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.4;
+        }
+        
+        /* 目的セクション */
+        .purpose {
+            background-color: var(--dark-card);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .purpose::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: 
+                radial-gradient(circle at 80% 10%, rgba(0, 230, 118, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 20% 90%, rgba(255, 64, 129, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+        
+        .purpose-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: rgba(30, 30, 30, 0.7);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            backdrop-filter: blur(10px);
+            border-left: 4px solid var(--accent);
+        }
+        
+        .purpose-content p {
+            margin-bottom: 20px;
+            color: var(--dark-text-muted);
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        /* 問題セクション */
+        .problems {
+            background-color: var(--dark-bg);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .problems::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(255, 64, 129, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(0, 230, 118, 0.1) 0%, transparent 50%);
+            z-index: 0;
+        }
+        
+        .problems-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .problems-text {
+            padding: 40px;
+            background-color: rgba(30, 30, 30, 0.7);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            backdrop-filter: blur(10px);
+            border-left: 4px solid var(--secondary-accent);
+        }
+        
+        .problems-image {
+            position: relative;
+        }
+        
+        .problems-image img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            border: 2px solid rgba(255, 64, 129, 0.3);
+        }
+        
+        .problems-image::before {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: -20px;
+            right: 20px;
+            top: 20px;
+            border: 2px solid var(--secondary-accent);
+            border-radius: var(--border-radius-lg);
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        /* ソリューションセクション */
+        .solutions {
+            background-color: var(--dark-card);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .solutions::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 70% 20%, rgba(0, 230, 118, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 30% 80%, rgba(255, 64, 129, 0.1) 0%, transparent 50%);
+            z-index: 0;
+        }
+        
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .solution-card {
+            background-color: rgba(41, 41, 41, 0.8);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            border-top: 3px solid transparent;
+        }
+        
+        .solution-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent);
+            background-color: rgba(41, 41, 41, 0.95);
+        }
+        
+        .solution-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient-1);
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+        
+        .solution-card:hover::before {
+            opacity: 1;
+        }
+        
+        .solution-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: var(--dark-bg);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .solution-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+        
+        .solution-text {
+            color: var(--dark-text-muted);
+            margin-bottom: 20px;
+        }
+        
+        /* 価値セクション */
+        .values {
+            background-color: var(--dark-bg);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .values::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(0, 230, 118, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 64, 129, 0.1) 0%, transparent 50%);
+            z-index: 0;
+        }
+        
+        .values-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .values-image {
+            position: relative;
+            order: 2;
+        }
+        
+        .values-image img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            border: 2px solid rgba(0, 230, 118, 0.3);
+        }
+        
+        .values-image::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            left: 20px;
+            bottom: 20px;
+            border: 2px solid var(--accent);
+            border-radius: var(--border-radius-lg);
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            order: 1;
+        }
+        
+        .value-card {
+            background-color: rgba(30, 30, 30, 0.7);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border-left: 3px solid var(--accent);
+        }
+        
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            background-color: rgba(30, 30, 30, 0.9);
+        }
+        
+        .value-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .value-title i {
+            color: var(--secondary-accent);
+        }
+        
+        .value-text {
+            color: var(--dark-text-muted);
+            font-size: 0.95rem;
+        }
+        
+        .value-highlight {
+            color: var(--accent);
+            font-weight: 700;
+        }
+        
+        /* ユーザー証言セクション */
+        .testimonials {
+            background-color: var(--dark-card);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .testimonials::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 70% 30%, rgba(0, 230, 118, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 20% 70%, rgba(255, 64, 129, 0.1) 0%, transparent 50%);
+            z-index: 0;
+        }
+        
+        .testimonials-container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .testimonial-card {
+            background-color: rgba(41, 41, 41, 0.8);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+            background-color: rgba(41, 41, 41, 0.95);
+            border-color: rgba(0, 230, 118, 0.3);
+        }
+        
+        .testimonial-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--dark-card-hover) 0%, var(--dark-card) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            position: relative;
+        }
+        
+        .testimonial-info {
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--dark-text);
+        }
+        
+        .testimonial-position {
+            font-size: 0.9rem;
+            color: var(--dark-text-muted);
+        }
+        
+        .testimonial-text {
+            color: var(--dark-text-muted);
+            position: relative;
+            padding-left: 25px;
+            line-height: 1.8;
+        }
+        
+        .testimonial-text::before {
+            content: '"';
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 2.5rem;
+            line-height: 1;
+            color: var(--accent);
+            opacity: 0.5;
+        }
+        
+        /* フッター */
+        .footer {
+            background-color: var(--dark-card);
+            padding: 60px 0 120px;
+            position: relative;
+        }
+        
+        .disclaimer {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            color: var(--dark-text-muted);
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+        
+        .disclaimer-title {
+            color: var(--dark-text);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        /* ボタン */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: none;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s ease;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            color: var(--dark-bg);
+            box-shadow: 0 5px 15px rgba(0, 230, 118, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 230, 118, 0.4);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--secondary-accent) 0%, var(--secondary-accent-hover) 100%);
+            color: var(--dark-text);
+            box-shadow: 0 5px 15px rgba(255, 64, 129, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(255, 64, 129, 0.4);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--accent);
+            box-shadow: inset 0 0 0 2px var(--accent);
+        }
+        
+        .btn-outline:hover {
+            background: rgba(0, 230, 118, 0.1);
+            transform: translateY(-5px);
+        }
+        
+        /* フローティングボタン */
+        .floating-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 90%;
+            max-width: 500px;
+        }
+        
+        .floating-btn .btn {
+            width: 100%;
+            animation: pulse 2s infinite;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            color: var(--dark-bg);
+            box-shadow: 0 5px 20px rgba(0, 230, 118, 0.4);
+            padding: 18px 30px;
+        }
+        
+        /* レスポンシブデザイン */
+        @media (max-width: 992px) {
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .hero-grid, .problems-content, .values-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .hero-content, .problems-text {
+                text-align: center;
+            }
+            
+            .section-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .hero-image, .problems-image, .values-image {
+                max-width: 500px;
+                margin: 0 auto;
+            }
+            
+            .solutions-grid, .testimonials-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .values-image {
+                order: 1;
+            }
+            
+            .values-grid {
+                order: 2;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            section {
+                padding: 60px 0;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .solutions-grid, .values-grid, .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .purpose-content, .problems-text {
+                padding: 30px;
+            }
+            
+            .solution-card, .value-card, .testimonial-card {
+                padding: 25px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-description {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .solution-title, .value-title {
+                font-size: 1.2rem;
+            }
+            
+            .purpose-content, .problems-text {
+                padding: 25px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ナビゲーション -->
+    <nav class="nav">
+        <div class="container nav-container">
+            <a href="#" class="logo">投資<span>コミュニティ</span></a>
+        </div>
+    </nav>
+    
+    <!-- ヒーローセクション -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="hero-badge">新規オープン</div>
+                    <h1 class="hero-title">株式知識共有<span class="highlight">LINEコミュニティ</span>が正式にオープン！</h1>
+                    <p class="hero-description">株式投資の世界で孤独を感じていませんか？専門知識が不足していて、市場の変動に悩んでいませんか？私たちのコミュニティで、投資の旅を一緒に歩みましょう。</p>
+                    <button class="btn btn-primary" onclick="opensite()">
+                        <i class="fab fa-line"></i> 無料で参加する
+                    </button>
+                </div>
+                <div class="hero-image">
+                    <img src="img/1.jpg" alt="株式投資コミュニティ">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 目的セクション -->
+    <section class="purpose">
+        <div class="container">
+            <h2 class="section-title">コミュニティ設立の目的</h2>
+            <div class="purpose-content">
+                <p>株式投資は決して難しいものではありません。成功の鍵は正確な情報と継続的な学習にあります。私たちは経験と知識を共有するプラットフォームを構築し、同じ志を持つ投資家が集まり、共に成長・進歩できる場を提供しています。</p>
+                <p>複雑に見える投資の世界を、誰もが理解しやすい形で提供することで、より多くの方が自信を持って投資判断ができるようになることを目指しています。</p>
+                <div class="text-center" style="margin-top: 30px;">
+                    <button class="btn btn-primary" onclick="opensite()">
+                        <i class="fab fa-line"></i> 投資学習の旅を今すぐ始める
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 問題セクション -->
+    <section class="problems">
+        <div class="container">
+            <div class="problems-content">
+                <div class="problems-text">
+                    <h2 class="section-title">投資の課題</h2>
+                    <p>投資の旅は一人で歩む必要はありません。初めてのステップを踏み出そうとしている方も、市場の変動に戸惑っている方も、私たちはサポートと学びの環境を提供します。</p>
+                    <p>ここには複雑な障壁はなく、明確な知識の共有と志を同じくする仲間だけがあり、あなたの投資の次のステップへの道のりをサポートします。</p>
+                    <div style="margin-top: 30px;">
+                        <button class="btn btn-secondary" onclick="opensite()">
+                            <i class="fab fa-line"></i> 無料で参加して新しい投資の旅を始める
+                        </button>
+                    </div>
+                </div>
+                <div class="problems-image">
+                    <img src="img/2.jpg" alt="投資の課題">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ソリューションセクション -->
+    <section class="solutions">
+        <div class="container">
+            <h2 class="section-title centered">私たちのソリューション</h2>
+            <div class="solutions-grid">
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h3 class="solution-title">専門家による指導</h3>
+                    <p class="solution-text">経験豊富な投資家がオンラインセミナーやQ&Aセッションを定期的に開催し、プロの視点からのアドバイスを提供します。迷いを減らし、より自信を持った投資判断をサポートします。</p>
+                </div>
+                
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="solution-title">コミュニティのサポート</h3>
+                    <p class="solution-text">2,000人以上のアクティブメンバーからなる投資コミュニティに参加し、同じ志を持つ仲間とアイデアや経験を共有しながら、市場動向をリアルタイムで議論できます。</p>
+                </div>
+                
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="solution-title">精選された情報</h3>
+                    <p class="solution-text">重要な市場トレンドと動向を一か所に集約し、高品質の情報サポートを提供することで、より賢明な投資選択をサポートします。情報過多の中でも本当に重要なことに焦点を当てます。</p>
+                </div>
+            </div>
+            
+            <div class="text-center" style="margin-top: 50px;">
+                <button class="btn btn-primary" onclick="opensite()">
+                    <i class="fab fa-line"></i> 無料で参加する
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 価値セクション -->
+    <section class="values">
+        <div class="container">
+            <div class="values-content">
+                <div class="values-image">
+                    <img src="img/3.jpg" alt="コミュニティの価値">
+                </div>
+                
+                <div class="values-grid">
+                    <div class="value-card">
+                        <h3 class="value-title"><i class="fas fa-rocket"></i>投資スキルの習得</h3>
+                        <p class="value-text">新規メンバーは短期間で核となる投資分析手法を習得でき、スムーズに最初の一歩を踏み出せます。体系的な学習環境が整っています。</p>
+                    </div>
+                    
+                    <div class="value-card">
+                        <h3 class="value-title"><i class="fas fa-shield-alt"></i>リスク低減</h3>
+                        <p class="value-text">専門家の指導とコミュニティの経験共有を通じて、市場変動に対してより合理的に対応し、不必要な損失を減らすサポートをします。</p>
+                    </div>
+                    
+                    <div class="value-card">
+                        <h3 class="value-title"><i class="fas fa-chart-pie"></i>収益力向上</h3>
+                        <p class="value-text">多くのユーザーがコミュニティ参加後、投資戦略の効率化を報告しており、より良い投資リターンを実現しています。</p>
+                    </div>
+                    
+                    <div class="value-card">
+                        <h3 class="value-title"><i class="fas fa-hourglass-half"></i>時間効率の最大化</h3>
+                        <p class="value-text">毎日わずか<span class="value-highlight">15分</span>で厳選された市場情報と実用的な投資知識を取得でき、効率的に学習を進められます。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center" style="margin-top: 50px;">
+                <button class="btn btn-secondary" onclick="opensite()">
+                    <i class="fab fa-line"></i> 少ない時間で多くの投資知識を得る
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ユーザー証言セクション -->
+    <section class="testimonials">
+        <div class="container testimonials-container">
+            <h2 class="section-title centered">メンバーの声</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="testimonial-info">
+                        <h3 class="testimonial-name">山田 健太</h3>
+                        <p class="testimonial-position">IT企業社員 (30代)</p>
+                    </div>
+                    <div class="testimonial-text">
+                        <p>このコミュニティに参加する前は、投資用語の理解に苦労していましたが、毎日の知識共有と丁寧な解説のおかげで、投資関連の情報を自分で調査・理解できるようになりました。特に他のメンバーとの交流が、自分の視野を広げるのに役立っています。投資に対する不安が減り、より自信を持った判断ができるようになりました。</p>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="testimonial-info">
+                        <h3 class="testimonial-name">佐藤 美咲</h3>
+                        <p class="testimonial-position">フリーランスデザイナー (20代)</p>
+                    </div>
+                    <div class="testimonial-text">
+                        <p>投資初心者として参加しましたが、コミュニティの体系的な学習資料と経験者からのアドバイスにより、基本的な投資分析手法をスムーズに学ぶことができました。特に市場変動時の対応について多くを学び、感情に流されずに判断する力が身につきました。同じ志を持つ仲間がいることで、継続的な学習のモチベーションが維持できています。</p>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="testimonial-info">
+                        <h3 class="testimonial-name">鈴木 大輔</h3>
+                        <p class="testimonial-position">会社経営者 (40代)</p>
+                    </div>
+                    <div class="testimonial-text">
+                        <p>忙しい日々の中でも、このコミュニティの精選された情報は非常に価値があります。15分程度の短い時間で重要なマーケット情報を把握でき、効率的に知識を深められています。特にセミナーの質が高く、実践的な内容が多いので、すぐに活用できる知識が得られます。情報の質と量のバランスが絶妙で、時間効率よく投資能力を向上させることができています。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center" style="margin-top: 50px;">
+                <button class="btn btn-primary" onclick="opensite()">
+                    <i class="fab fa-line"></i> 今すぐコミュニティに参加する
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="container">
+            <div class="disclaimer">
+                <h3 class="disclaimer-title">免責事項</h3>
+                <p>当コミュニティは教育目的のみで運営されており、投資アドバイスの提供を目的としていません。すべての情報は一般的な情報提供を目的としており、特定の投資結果を保証するものではありません。</p>
+                <p>投資には元本割れのリスクが伴います。過去のパフォーマンスは将来の結果を保証するものではありません。投資判断を行う前に、ご自身の財務状況、投資目標、リスク許容度を考慮し、必要に応じて専門家のアドバイスを求めてください。</p>
+                <p>当コミュニティでは特定の証券の売買を推奨せず、日本の金融商品取引法及び関連法規を遵守しています。コミュニティ内で共有される情報は、メンバー自身の経験や見解に基づくものであり、投資判断の根拠として利用する場合は、ご自身の責任において行ってください。</p>
+                <p>本コミュニティはGoogle Japanの金融広告ポリシーに準拠しています。</p>
+                <p>© 2023 株式投資知識共有コミュニティ. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- フローティングボタン -->
+    <div class="floating-btn">
+        <button class="btn" onclick="opensite()">
+            <i class="fab fa-line"></i> 今すぐ無料でコミュニティに参加する
+        </button>
+    </div>
+    
+    <script>
+        function opensite() {
+            window.open('https://line.me/your_line_link', '_blank');
+        }
+    </script>
+</body>
+</html>
