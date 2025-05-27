@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>金融投資マスタリング | いちよし証券グループ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #0A0E29;
+            --secondary-dark: #111C44;
+            --accent-blue: #0075FF;
+            --accent-cyan: #00E0FF;
+            --accent-purple: #9C00FF;
+            --accent-gold: #FFD700;
+            --text-white: #FFFFFF;
+            --text-light: #E6F1FF;
+            --text-muted: #A9BEDB;
+            --shadow-dark: rgba(0, 0, 0, 0.5);
+            --highlight-gradient: linear-gradient(120deg, var(--accent-blue), var(--accent-purple));
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        
+        html, body {
+            overflow-x: hidden;
+            background: var(--primary-dark);
+            color: var(--text-white);
+            line-height: 1.6;
+        }
+        
+        /* スクロールバースタイル */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(10, 14, 41, 0.8);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-blue);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-cyan);
+        }
+        
+        .main-wrapper {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .toushi-container {
+            width: 90%;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* ヘッダーセクション */
+        .toushi-hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(10, 14, 41, 0.9), rgba(17, 28, 68, 0.9));
+            z-index: -2;
+        }
+        
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://www.jacmsotck.online/riguai415/7.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2;
+            z-index: -1;
+            filter: blur(2px);
+        }
+        
+        .hero-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background-color: var(--accent-blue);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 15s infinite linear;
+        }
+        
+        .particle.gold {
+            background-color: var(--accent-gold);
+            width: 2px;
+            height: 2px;
+        }
+        
+        .particle.cyan {
+            background-color: var(--accent-cyan);
+            width: 4px;
+            height: 4px;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(30px);
+                opacity: 0;
+            }
+        }
+        
+        .hero-content {
+            text-align: center;
+            padding: 60px 0;
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .hero-title-wrap {
+            position: relative;
+            margin-bottom: 40px;
+        }
+        
+        .hero-subtitle {
+            color: var(--accent-gold);
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            letter-spacing: 3px;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1.2;
+            text-shadow: 0 5px 15px rgba(0, 117, 255, 0.5);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .hero-title::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 10px;
+            bottom: -20px;
+            left: 0;
+            background: var(--highlight-gradient);
+            border-radius: 5px;
+        }
+        
+        .hero-description {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            margin: 40px auto 30px;
+            color: var(--text-light);
+            max-width: 800px;
+        }
+        
+        .limited-offer {
+            background: rgba(0, 117, 255, 0.15);
+            border: 2px solid var(--accent-blue);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px auto;
+            max-width: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .limited-offer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 117, 255, 0.2), transparent 80%);
+            z-index: -1;
+        }
+        
+        .offer-title {
+            color: var(--accent-cyan);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .seats-count {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--accent-gold);
+            margin: 10px 0;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .seats-count::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            height: 3px;
+            background: var(--accent-gold);
+            border-radius: 2px;
+        }
+        
+        .hero-image-container {
+            margin: 30px auto;
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+        }
+        
+        .hero-image {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 117, 255, 0.3);
+            border: 2px solid rgba(0, 224, 255, 0.3);
+            transition: all 0.4s ease;
+        }
+        
+        .hero-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 117, 255, 0.4);
+        }
+        
+        /* 主要ボタンスタイル */
+        .action-btn {
+            display: inline-block;
+            background: var(--highlight-gradient);
+            color: var(--text-white);
+            font-weight: 700;
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 10px 20px rgba(0, 117, 255, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin: 20px 0;
+            text-align: center;
+            min-width: 250px;
+        }
+        
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: all 0.6s ease;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 117, 255, 0.5);
+        }
+        
+        .action-btn:hover::before {
+            left: 100%;
+        }
+        
+        /* セクション共通スタイル */
+        .toushi-section {
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .bg-gradient-1 {
+            background: linear-gradient(to bottom, var(--primary-dark), var(--secondary-dark));
+        }
+        
+        .bg-gradient-2 {
+            background: linear-gradient(to bottom, var(--secondary-dark), var(--primary-dark));
+        }
+        
+        .bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(0, 117, 255, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(156, 0, 255, 0.15) 0%, transparent 40%);
+            opacity: 0.6;
+        }
+        
+        .animated-circle {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid rgba(0, 117, 255, 0.2);
+            opacity: 0.3;
+            animation: pulse-scale 6s infinite ease-in-out;
+        }
+        
+        .animated-circle.gold {
+            border-color: rgba(255, 215, 0, 0.2);
+            animation-delay: -3s;
+        }
+        
+        .animated-circle.cyan {
+            border-color: rgba(0, 224, 255, 0.2);
+            animation-delay: -6s;
+        }
+        
+        @keyframes pulse-scale {
+            0% {
+                transform: scale(0.8);
+                opacity: 0.2;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(0.8);
+                opacity: 0.2;
+            }
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+        
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 900;
+            margin-bottom: 30px;
+            color: var(--text-white);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 20px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background: var(--highlight-gradient);
+            border-radius: 3px;
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* コースセクション */
+        .courses-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .course-card {
+            background: rgba(10, 14, 41, 0.7);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(10px);
+        }
+        
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--highlight-gradient);
+            z-index: 1;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 117, 255, 0.2);
+        }
+        
+        .course-content {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .course-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--accent-cyan);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .course-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent-cyan);
+            border-radius: 2px;
+        }
+        
+        .course-text {
+            color: var(--text-light);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        .stats-highlight {
+            display: inline-block;
+            color: var(--accent-gold);
+            font-weight: 700;
+            position: relative;
+        }
+        
+        .course-image-wrapper {
+            position: relative;
+            margin: 50px auto;
+            width: 100%;
+            max-width: 600px;
+        }
+        
+        .course-image {
+            display: block;
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(0, 117, 255, 0.2);
+            transition: all 0.4s ease;
+        }
+        
+        .course-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 117, 255, 0.3);
+        }
+        
+        .image-glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            box-shadow: 0 0 40px rgba(0, 117, 255, 0.3);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .course-image-wrapper:hover .image-glow {
+            opacity: 1;
+        }
+        
+        .flexible-learning {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 900px;
+            margin: 50px auto 40px;
+            padding: 25px;
+            background: rgba(17, 28, 68, 0.5);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(0, 117, 255, 0.15);
+            position: relative;
+        }
+        
+        /* 特徴セクション */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .feature-box {
+            background: rgba(17, 28, 68, 0.5);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+            backdrop-filter: blur(10px);
+        }
+        
+        .feature-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--highlight-gradient);
+            z-index: 1;
+        }
+        
+        .feature-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 117, 255, 0.2);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 25px;
+            color: var(--accent-gold);
+            display: block;
+        }
+        
+        .feature-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--accent-cyan);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .feature-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--accent-cyan);
+            border-radius: 2px;
+        }
+        
+        .feature-text {
+            color: var(--text-light);
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+        
+        /* 社会的証明セクション */
+        .social-proof-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--primary-dark), var(--secondary-dark));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .proof-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin: 60px 0;
+        }
+        
+        .proof-card {
+            background: rgba(10, 14, 41, 0.7);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+            position: relative;
+            height: 100%;
+            backdrop-filter: blur(10px);
+        }
+        
+        .proof-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--highlight-gradient);
+        }
+        
+        .proof-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 117, 255, 0.2);
+        }
+        
+        .proof-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .proof-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent-gold);
+            border-radius: 2px;
+        }
+        
+        .proof-text {
+            color: var(--text-light);
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+        
+        .proof-stat {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(0, 117, 255, 0.2);
+        }
+        
+        /* 免責事項 */
+        .disclaimer-section {
+            padding: 80px 0;
+            background: var(--primary-dark);
+            position: relative;
+        }
+        
+        .disclaimer-box {
+            background: rgba(17, 28, 68, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(0, 117, 255, 0.1);
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+        
+        .disclaimer-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 15px;
+            display: inline-block;
+        }
+        
+        .disclaimer-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent-gold);
+            border-radius: 2px;
+        }
+        
+        .disclaimer-text {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        
+        /* フローティングボタン */
+        .floating-button {
+            position: fixed;
+            bottom: 30px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 0 20px;
+            z-index: 1000;
+        }
+        
+        .floating-btn {
+            display: inline-block;
+            background: var(--highlight-gradient);
+            color: var(--text-white);
+            font-weight: 700;
+            padding: 18px 40px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 117, 255, 0.4);
+            animation: float-pulse 2s infinite;
+            border: none;
+            font-size: 1.2rem;
+            min-width: 320px;
+            max-width: 90%;
+            text-align: center;
+            white-space: nowrap;
+        }
+        
+        @keyframes float-pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 117, 255, 0.4);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 117, 255, 0.6);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 117, 255, 0.4);
+            }
+        }
+        
+        /* レスポンシブデザイン */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .hero-description {
+                font-size: 1.15rem;
+            }
+            
+            .section-title {
+                font-size: 2.4rem;
+            }
+            
+            .toushi-section {
+                padding: 80px 0;
+            }
+            
+            .courses-container, .features-grid, .proof-grid {
+                gap: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.4rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .hero-description {
+                font-size: 1.05rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .course-title, .feature-title, .proof-title {
+                font-size: 1.3rem;
+            }
+            
+            .toushi-section {
+                padding: 60px 0;
+            }
+            
+            .course-content, .feature-box, .proof-card {
+                padding: 25px;
+            }
+            
+            .disclaimer-box {
+                padding: 30px;
+            }
+            
+            .action-btn, .floating-btn {
+                padding: 15px 30px;
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+                letter-spacing: 2px;
+            }
+            
+            .hero-description, .flexible-learning {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-subtitle {
+                font-size: 1rem;
+            }
+            
+            .course-title, .feature-title, .proof-title {
+                font-size: 1.2rem;
+            }
+            
+            .course-text, .feature-text, .proof-text {
+                font-size: 1rem;
+            }
+            
+            .action-btn, .floating-btn {
+                padding: 14px 25px;
+                font-size: 1rem;
+                min-width: auto;
+            }
+            
+            .disclaimer-title {
+                font-size: 1.3rem;
+            }
+            
+            .disclaimer-text {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-wrapper">
+        <!-- ヘッダーセクション -->
+        <section class="toushi-hero">
+            <div class="hero-bg"></div>
+            
+            <!-- パーティクル効果 -->
+            <div class="hero-particles">
+                <!-- パーティクルは JavaScript で生成 -->
+            </div>
+            
+            <div class="toushi-container hero-content">
+                <div class="hero-title-wrap">
+                    <h2 class="hero-subtitle">いちよし証券グループ</h2>
+                    <h1 class="hero-title">株式投資を極める</h1>
+                </div>
+                
+                <p class="hero-description">いちよし証券グループは「日本の証券業界で卓越した存在になる」という崇高な使命を掲げ、「金融サービス業の精鋭ブランド」を目指して前進し続けています。現代の金融市場において、株式投資はますます注目を集めています。皆様が株式知識をより良く理解できるよう、私たちの市場学習コースにご参加いただくことを心よりお待ちしております。</p>
+                
+                <div class="hero-image-container">
+                    <img src="img/2.jpg" alt="証券取引" class="hero-image">
+                    <div class="image-glow"></div>
+                </div>
+                
+                <div class="limited-offer">
+                    <h3 class="offer-title">限定特別オファー</h3>
+                    <p class="seats-count">残り100名様</p>
+                    <p>今すぐお申し込みいただくと、追加の学習資料を無料でご提供します</p>
+                </div>
+                
+                <button class="action-btn" onclick="openta()">今すぐ枠を確保する</button>
+            </div>
+        </section>
+        
+        <!-- コースセクション -->
+        <section class="toushi-section">
+            <div class="section-bg bg-gradient-1">
+                <div class="bg-pattern"></div>
+                <div class="animated-circle" style="width: 300px; height: 300px; top: 10%; right: 10%;"></div>
+                <div class="animated-circle gold" style="width: 200px; height: 200px; top: 50%; left: 5%;"></div>
+                <div class="animated-circle cyan" style="width: 400px; height: 400px; bottom: 10%; right: 20%;"></div>
+            </div>
+            
+            <div class="toushi-container">
+                <div class="section-header">
+                    <h2 class="section-title">コース内容</h2>
+                    <p class="section-subtitle">私たちの専門チームが設計した包括的なプログラムで、市場知識を深めましょう</p>
+                </div>
+                
+                <div class="courses-container">
+                    <div class="course-card">
+                        <div class="course-content">
+                            <h3 class="course-title">株式技術コース</h3>
+                            <p class="course-text">株式市場の仕組みを深く理解し、市場トレンドと投資戦略をマスターします。<span class="stats-highlight">300名以上</span>の受講生が学んだ知識を実践で活用しています。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="course-card">
+                        <div class="course-content">
+                            <h3 class="course-title">短期トレード技術</h3>
+                            <p class="course-text">短期間で市場機会を捉え、市場変動に柔軟に対応する方法を学び、トレードスキルを向上させます。実践的なシミュレーションを通じて実際の市場環境での判断力を養います。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="course-card">
+                        <div class="course-content">
+                            <h3 class="course-title">テクニカル指標分析</h3>
+                            <p class="course-text">様々なテクニカル指標の使い方を習得し、賢明な投資判断をサポートします。受講生の<span class="stats-highlight">70%</span>が市場動向をより正確に予測できるようになりました。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="course-card">
+                        <div class="course-content">
+                            <h3 class="course-title">リスク管理戦略</h3>
+                            <p class="course-text">投資リスクを効果的に管理し、資産を保護する方法を学びます。コース参加者の平均リスク損失は<span class="stats-highlight">30%減少</span>しています。適切なリスク管理は長期的な投資成功の鍵です。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="course-card">
+                        <div class="course-content">
+                            <h3 class="course-title">銘柄選択方法</h3>
+                            <p class="course-text">科学的な銘柄選択テクニックを学び、潜在的な投資機会を識別します。受講生の<span class="stats-highlight">80%</span>がコース終了後に独自に銘柄を選択できるようになっています。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flexible-learning">
+                    <p>私たちは柔軟な株式市場知識の学習機会を提供し、毎日複数のコースから選択できるため、個人のスケジュールに合わせて学習することができます。コース内容は基本概念から市場分析まで、様々なレベルの知識をカバーしています。</p>
+                </div>
+                
+                <div style="text-align: center;">
+                    <button class="action-btn" onclick="openta()">今すぐ参加する</button>
+                </div>
+                
+                <div class="course-image-wrapper">
+                    <img src="img/1.jpg" alt="株式市場学習" class="course-image">
+                    <div class="image-glow"></div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 特徴セクション -->
+        <section class="toushi-section">
+            <div class="section-bg bg-gradient-2">
+                <div class="bg-pattern"></div>
+                <div class="animated-circle" style="width: 350px; height: 350px; top: 20%; left: 10%;"></div>
+                <div class="animated-circle gold" style="width: 250px; height: 250px; top: 60%; right: 5%;"></div>
+                <div class="animated-circle cyan" style="width: 300px; height: 300px; bottom: 15%; left: 20%;"></div>
+            </div>
+            
+            <div class="toushi-container">
+                <div class="section-header">
+                    <h2 class="section-title">活動の特徴</h2>
+                    <p class="section-subtitle">市場を理解するために必要な要素をすべて提供します</p>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-box">
+                        <span class="feature-icon">📊</span>
+                        <h3 class="feature-title">専門知識解説</h3>
+                        <p class="feature-text">金融専門家による証券市場の基礎知識と市場分析方法の共有を通じて、参加者が正しい投資認識フレームワークを構築できるようサポートします。</p>
+                    </div>
+                    
+                    <div class="feature-box">
+                        <span class="feature-icon">💬</span>
+                        <h3 class="feature-title">経験交流セッション</h3>
+                        <p class="feature-text">インタラクティブなディスカッションセッションを設け、参加者が市場現象について意見交換できる場を提供します（注：特定銘柄の推奨は行いません）。</p>
+                    </div>
+                    
+                    <div class="feature-box">
+                        <span class="feature-icon">🔄</span>
+                        <h3 class="feature-title">模擬取引体験</h3>
+                        <p class="feature-text">教育用の模擬取引環境を提供し、市場メカニズムの学習にのみ使用します。リスクなしで実践的なスキルを磨くことができます。</p>
+                    </div>
+                    
+                    <div class="feature-box">
+                        <span class="feature-icon">📚</span>
+                        <h3 class="feature-title">学習資料サポート</h3>
+                        <p class="feature-text">活動後、基本的な金融知識参考資料を提供し、継続的な学習をサポートします。いつでも復習できる貴重なリソースとなります。</p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 50px;">
+                    <button class="action-btn" onclick="openta()">詳細を確認する</button>
+                </div>
+            </div>
+        </section>
+        
+        
+        <!-- 免責事項セクション -->
+        <section class="disclaimer-section">
+            <div class="toushi-container">
+                <div class="disclaimer-box">
+                    <h3 class="disclaimer-title">重要な開示事項</h3>
+                    <p class="disclaimer-text">本ウェブサイトは、金融・株式に関心を持つ方々に教育的な情報を提供することを目的としています。当サイトで提供する情報は一般的な知識の普及を目的としており、いかなる投資アドバイスも構成するものではありません。</p>
+                    <p class="disclaimer-text">私たちのコースと教材は、株式市場の仕組みと分析手法を理解するための教育目的にのみ提供されており、特定の投資商品の推奨や売買の勧誘を行うものではありません。すべての投資決定は、投資家自身の判断に基づいて行われるべきであり、必要に応じて資格のある金融アドバイザーに相談することをお勧めします。</p>
+                    <p class="disclaimer-text">投資にはリスクが伴います。株式を含むすべての投資商品は、市場状況に応じて価値が上下する可能性があり、過去のパフォーマンスは将来の結果を保証するものではありません。投資家は自身の財務状況、投資目標、リスク許容度を考慮して慎重に投資判断を行うべきです。</p>
+                    <p class="disclaimer-text">当サイトが提供するシミュレーションや模擬取引環境は、教育目的のみに使用されるべきであり、実際の取引結果を保証するものではありません。</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- フローティングボタン -->
+        <div class="floating-button">
+            <button class="floating-btn" onclick="openta()">今すぐLineで無料相談</button>
+        </div>
+    </div>
+    
+    <script>
+        // パーティクル生成
+        document.addEventListener('DOMContentLoaded', function() {
+            const particlesContainer = document.querySelector('.hero-particles');
+            
+            // パーティクル作成関数
+            function createParticles() {
+                // 既存のパーティクルをクリア
+                particlesContainer.innerHTML = '';
+                
+                // 画面サイズに基づいてパーティクル数を決定
+                const particleCount = window.innerWidth < 768 ? 30 : 50;
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    
+                    // ランダムなクラスとスタイルを設定
+                    if (i % 3 === 0) {
+                        particle.classList.add('particle', 'gold');
+                    } else if (i % 3 === 1) {
+                        particle.classList.add('particle', 'cyan');
+                    } else {
+                        particle.classList.add('particle');
+                    }
+                    
+                    // ランダムな位置を設定
+                    const left = Math.random() * 100;
+                    const top = Math.random() * 100;
+                    
+                    // ランダムなアニメーション遅延を設定
+                    const delay = Math.random() * 15;
+                    const duration = 10 + Math.random() * 20;
+                    
+                    particle.style.left = `${left}%`;
+                    particle.style.top = `${top}%`;
+                    particle.style.animationDuration = `${duration}s`;
+                    particle.style.animationDelay = `${delay}s`;
+                    
+                    particlesContainer.appendChild(particle);
+                }
+            }
+            
+            // 初期パーティクル生成
+            createParticles();
+            
+            // ウィンドウサイズ変更時にパーティクルを再生成
+            window.addEventListener('resize', createParticles);
+        });
+
+        // WhatsAppへのリンク関数
+        function openta() {
+            window.location.href = "https://wa.me/";
+        }
+        
+        // スワイプナビゲーション防止
+        document.addEventListener('touchstart', function(e) {
+            if(e.touches.length > 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+        
+        document.addEventListener('touchmove', function(e) {
+            if(e.touches.length > 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+    </script>
+</body>
+</html>
